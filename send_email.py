@@ -1,22 +1,37 @@
 import smtplib
-import ssl
-from email.message import EmailMessage
+import os
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+from email.header import Header
 
-email_sender = 'mohammedrihal.mr@gmail.com'
-password = 'tidx dvxw iqcb qnmn'
-email_receivers = ['nawafnazeer@gmail.com','zinnferns@gmail.com', 'groverhriday12@gmail.com']
+import email_config as ec
 
-subject = 'WAASSAAPP'
-body = """Hi, this was sent using python"""
+def send_email_w_attachment(to, subject, body, filename):
+    message = MIMEMultipart()
 
-em = EmailMessage()
-em['From'] = email_sender
-em['To'] = ', '.join(email_receivers)
-em['Subject'] = subject
-em.set_content(body)
+    message['From'] = Header(ec.user)
+    message['To'] = Header(to)
+    message['Subject'] = Header(subject)
 
-context = ssl.create_default_context()
+    message.attach(MIMEText(body, 'plain', 'utf-8'))
 
-with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-    smtp.login(email_sender, password)
-    smtp.sendmail(email_sender, email_receivers, em.as_string())
+    att_name = os.path.basename(filename)
+    _f = open(filename, 'rb')
+    att = MIMEApplication(_f.read(), _subtype="avi")
+    _f.close()
+    att.add_header('Content-Disposition', 'attachment', filename=att_name)
+    message.attach(att)
+
+    server = smtplib.SMTP_SSL(ec.host, ec.port)
+    server.login(ec.user, ec.gmail_pass)
+
+    server.sendmail(ec.user, to, message.as_string())
+    server.quit()
+
+# to = "mohdrihal.mr@gmail.com"
+# subject = "An example email"
+# body = "Hi, This email is an example of how to send emails in Python"
+# filename = "0.avi"
+
+# send_email_w_attachment(to, subject, body, filename)
