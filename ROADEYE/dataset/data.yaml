@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['moderate', 'severe']
+
+roboflow:
+  workspace: accident-detection-ffdrf
+  project: accident-detection-8dvh5
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/accident-detection-ffdrf/accident-detection-8dvh5/dataset/1
