@@ -41,3 +41,9 @@ predict_accident('1.avi')
 
 # #only if accident happens
 # #send using smtp (email.py)
+# to = "akheelnazim157@gmail.com"
+# subject = "WASAAP"
+# body = "Hi"
+# filename = "1.avi"
+
+# send_email_w_attachment(to, subject, body, filename)

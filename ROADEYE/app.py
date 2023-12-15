@@ -5,8 +5,8 @@ from send_email import send_email_w_attachment
 predict_accident()
 
 # Send email
-# to = "fatimaalmurbati27@gmail.com"
-# subject = "avi"
+# to = "akheelnazim157@gmail.com"
+# subject = "WASAAP"
 # body = "Hi"
 # filename = "1.avi"
 
