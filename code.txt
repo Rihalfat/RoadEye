@@ -1,0 +1,107 @@
+***using google colab***
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+
+***training the model***
+
+!yolo task=detect mode=train model=yolov8n.pt data=/content/datasets/data.yaml epochs=15
+
+
+***testing the model***
+
+!yolo task=detect mode=predict model=/content/runs/detect/train/weights/best.pt conf=0.25 source=/content/drive/MyDrive/ColabNotebooks/testing.mp4 save=true
+
+***saving the results***
+
+!yolo task=detect mode=val model=/content/runs/detect/train/weights/best.pt data=/content/datasets/data.yaml save=true
+
+
+***app.py***
+
+from live import predict_accident
+from send_email import send_email_w_attachment
+
+# Predicting Accident
+predict_accident("s3://seniorwatertub/1.avi")
+
+# Send email
+to = "xxxxx@gmail.com"
+subject = "There has been an accident"
+body = """Hello, this is an automated message
+\n The clip attached below shows that, there has been an accident and has been reported to you.
+"""
+filename = "s3://seniorwatertub/1.avi"
+
+#calling the email function
+send_email_w_attachment(to, subject, body, filename)
+
+
+***send_email.py***
+
+import smtplib
+import os
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+from email.header import Header
+
+import email_config as ec
+
+def send_email_w_attachment(to, subject, body, filename):
+    message = MIMEMultipart()
+
+    message['From'] = Header(ec.user)
+    message['To'] = Header(to)
+    message['Subject'] = Header(subject)
+
+    message.attach(MIMEText(body, 'plain', 'utf-8'))
+
+...
+...
+
+    server = smtplib.SMTP_SSL(ec.host, ec.port)
+    server.login(ec.user, ec.gmail_pass)
+
+    server.sendmail(ec.user, to, message.as_string())
+    server.quit()
+
+
+***upload to S3***
+
+def upload_to_s3(local_file_path, s3_bucket, s3_key):
+    s3 = boto3.client('s3')
+    s3.upload_file(local_file_path, s3_bucket, s3_key)
+
+# Upload the video to AWS S3
+    s3_bucket = 'seniorwatertub'
+    s3_key = '1.avi'
+    upload_to_s3('1.avi', s3_bucket, s3_key)
+
+
+***run the prediction***
+
+def predict_accident(filename):
+    model = YOLO("D:\RoadEye\ROADEYE\yolov8n.pt")
+
+
+***make a playback using cv2***
+
+    # Start capturing video
+    cap = cv2.VideoCapture(0)
+...
+...
+
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Codec
+    out = cv2.VideoWriter(filename, fourcc, fps, (width, height))
+...
+...
+
+    cap.release()
+    out.release()
+    cv2.destroyAllWindows()
+
+predict_accident('s3://seniorwatertub/1.avi')
+
+***END***

@@ -28,3 +28,4 @@ def send_email_w_attachment(to, subject, body, filename):
 
     server.sendmail(ec.user, to, message.as_string())
     server.quit()
+
