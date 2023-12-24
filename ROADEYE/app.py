@@ -12,7 +12,7 @@ today = date.today()
 d = today.strftime("%B %d, %Y")
 
 # Send email
-to = "mohdrihal.mr@gmail.com"
+to = "thebait1983@hotmail.com"
 subject = "Accident Notification"
 body = f"This email was sent by RoadEye at {ct} on {d}. \n An accident has been reported in the parking lot. \n Please take immediate action to address the situation. Please check details attached: \n"
 filename = "1.avi"

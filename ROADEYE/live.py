@@ -26,9 +26,9 @@ def predict_accident(filename):
             print("Error reading frame.")
             break
 
-        results = model.predict(frame, conf=0.25, show=True)
+        model.predict(frame, conf=0.25, show=True)
         out.write(frame)
-        # print(results[0])
+
         key = cv2.waitKey(1)
         if key == ord('q'):
             break
