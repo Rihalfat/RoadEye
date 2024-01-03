@@ -12,10 +12,10 @@ today = date.today()
 d = today.strftime("%B %d, %Y")
 
 # Send email
-to = "thebait1983@hotmail.com"
+to = "muhdrihaal.mr@gmail.com"
 subject = "Accident Notification"
-body = f"This email was sent by RoadEye at {ct} on {d}. \n An accident has been reported in the parking lot. \n Please take immediate action to address the situation. Please check details attached: \n"
-filename = "1.avi"
+body = f"This email was sent by RoadEye at {ct} AM on {d}. \n An accident has been reported in the parking lot. \n Please take immediate action to address the situation. Please check details attached: \n"
+filename = "ROADEYE/1.avi"
 
 #calling the email function
 send_email_w_attachment(to, subject, body, filename)
