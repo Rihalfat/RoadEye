@@ -4,7 +4,7 @@ import time
 from datetime import date
 
 # Predicting Accident
-# predict_accident("1.avi")
+predict_accident("1.avi")
 
 t = time.localtime()
 ct = time.strftime("%H:%M", t)
