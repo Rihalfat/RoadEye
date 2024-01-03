@@ -1,4 +1,4 @@
-gmail_pass = "kftd zbex ynzd epwg"
-user = "mohammedrihal.mr@gmail.com"
+gmail_pass = "xxxx"
+user = "xxxx"
 host = "smtp.gmail.com"
 port = 465
